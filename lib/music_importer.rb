@@ -6,10 +6,10 @@ class MusicImporter
   end
 
   def files
-    files = []
-    Dir.new(self.path).each do |file|
-      files << file if file.length > 4
-    end
-    files
-  end
-end 
+     @files = Dir.chdir(@path) {|path| Dir.glob("*.mp3") }
+   end
+
+   def import
+     files.each {|file| Song.create_from_filename(file) }
+   end
+ end
