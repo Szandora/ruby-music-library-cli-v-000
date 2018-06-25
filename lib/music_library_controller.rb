@@ -1,13 +1,13 @@
 class MusicLibraryController
 
-  attr_accessor :path 
+  attr_accessor :path
 
   def initialize(path = "./db/mp3s")
     importer = MusicImporter.new(path)
-    importer.import 
-  end 
+    importer.import
+  end
 
-  def call 
+  def call
     input = ""
     while input != "exit"
 
@@ -21,4 +21,39 @@ class MusicLibraryController
       puts "To quit, type 'exit'."
       puts "What would you like to do?"
 
-      
+      input = gets.strip.downcase
+
+      case input
+      when "list artists"
+        list_artists
+      when "list genres"
+        list_genres
+      when "list songs"
+        list_songs
+      when "list artist"
+        list_songs_by_artist
+      when "list genre"
+        list_songs_by_genre
+      when "play song"
+        play_song
+      end
+    end
+  end
+
+  def list_artists
+    Artist.all.sort_by! {|artist| artist.name }.uniq.each_with_index do |artist, index|
+      puts "#{index +=1}. #{artist.name}"
+    end
+  end
+
+  def list_genres
+    Genre.all.sort_by! {|genre| genre.name }.uniq.each_with_index do |genre, index|
+      puts "#{index +=1}. #{genre.name}"
+    end
+  end
+
+  def list_songs
+      Song.all.sort_by! {|song| song.name }.uniq.each_with_index do |song, index|
+        puts "#{index +=1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
+      end
+    end
