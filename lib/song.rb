@@ -18,9 +18,12 @@ class Song
     self.class.all << self
   end
 
-  def destroy_all
+  def self.destroy_all
     @@all.clear
   end
 
-  def create
+  def self.create(name, artist = nil, genre = nil)
+    new_song = Song.new(song)
+    new_song.save 
+    new_song
   end
