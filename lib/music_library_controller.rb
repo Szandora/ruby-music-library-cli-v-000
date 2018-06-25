@@ -57,3 +57,31 @@ class MusicLibraryController
         puts "#{index +=1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
       end
     end
+
+    def list_songs_by_artist
+        puts "Please enter the name of an artist:"
+        artist = gets.chomp
+        if artist = Artist.find_by_name(artist)
+          artist.songs.sort_by! {|song| song.name }.uniq.each_with_index do |song, index|
+            puts "#{index +=1}. #{song.name} - #{song.genre.name}"
+          end
+        end
+      end
+
+      def list_songs_by_genre
+        puts "Please enter the name of a genre:"
+        genre = gets.chomp
+        if genre = Genre.find_by_name(genre)
+          genre.songs.sort_by! {|song| song.name }.uniq.each_with_index do |song, index|
+            puts "#{index +=1}. #{song.artist.name} - #{song.name}"
+          end
+        end
+      end
+
+      def play_song
+        puts "Which song number would you like to play?"
+        number = gets.chomp.to_i
+        song = Song.all.sort_by! {|song| song.name }[number -=1] if number > 0 && number < Song.all.count
+          puts "Playing #{song.name} by #{song.artist.name}" if song
+      end
+    end
