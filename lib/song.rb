@@ -1,5 +1,5 @@
 class Song
-  extend Concerns::findable
+  extend Concerns::Findable
 
   attr_accessor :name, :artist, :genre
 
